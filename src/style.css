@@ -1,0 +1,25 @@
+body {
+    margin: 0px;
+}
+
+.header {
+    width: 100vw;
+    height: 100px;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.container {
+    display: grid;
+}
+
+
+
+.logo {
+    background: url('./logoBig.png');
+    height: 75px;
+    width: 75px;
+}
