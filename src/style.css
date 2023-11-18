@@ -1,3 +1,15 @@
+:root {
+    --main-color:#232126;
+    --secondary-color:#A5774D;
+    --tertiary-color:#484944;
+    --background-color:#1c1d18;
+    --black-color:#040308;
+    --text-color:white;
+    --title-color:#201f24;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
 body {
     margin: 0px;
 }
@@ -5,21 +17,79 @@ body {
 .header {
     width: 100vw;
     height: 100px;
-    background-color: black;
-    color: white;
+    background-color: var(--tertiary-color);
+    color: var(--title-color);
     display: flex;
     flex-direction: row;
+    align-items: center;
+}
 
+.logotitle {
+    font-size: 3rem;
+    margin-left: 10px;
 }
 
 .container {
     display: grid;
+    background-color: var(--background-color);
+    grid-template-columns: 25vw 45vw 30vw;
+    column-gap: 10px;
+    padding-top: 10px;
+    color: var(--text-color);
 }
 
+.contents-container {
+    background-color: var(--main-color);
+    height: 100vh;
+}
+h2 {
+    margin-left: 10px;
+    margin-bottom: 0px;
 
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin-left: 20px;
+
+}
+
+i {
+    margin-right: 10px;
+    margin-left: 5px;
+    color: var(--text-color);
+}
+
+.add-list {
+    display: flex;
+    align-content: center;
+    justify-content: left;
+    margin-top: 5px;
+    padding-left: 10px;
+
+}
+
+.todo-container {
+    background-color: var(--main-color);
+    height: 100vh;
+    display: grid;
+    grid-template-rows: repeat(22, 35px);
+}
+
+.todo-title {
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.sidebar-container {
+    background-color: var(--secondary-color);
+    height: 100vh;
+}
 
 .logo {
-    background: url('./logoBig.png');
+    background: url('./logoSmall.png');
     height: 75px;
     width: 75px;
 }
