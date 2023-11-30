@@ -2,6 +2,28 @@ import _ from 'lodash';
 import './style.css';
 import { v4 as uuidv4 } from 'uuid';
 
+const buttonLogic = (function() {
+
+  const openAddTaskWindow = () => {
+    console.log('test');
+  }
+
+  const openAddListWindow = () => {
+    console.log('list test')
+  }
+
+  const openEditTaskWindow = () => {
+    
+  }
+  
+  const addTodoBtn = document.querySelector('.add-todo-btn');
+  addTodoBtn.addEventListener('click', openAddTaskWindow);
+
+  const addListBtn = document.querySelector('.add-list');
+  addListBtn.addEventListener('click', openAddListWindow);
+
+})();
+
 
 
 function addTodoDom(id, taskTitle) {
@@ -20,12 +42,17 @@ function addTodoDom(id, taskTitle) {
   title.classList.add('task');
   title.classList.add('task-title');
   title.textContent = taskTitle;
+  
+  const editBtn = document.createElement('button');
+  editBtn.classList.add('task');
+  editBtn.classList.add('task-btn');
+  editBtn.textContent = 'edit';
 
   element.appendChild(finished);
   element.appendChild(title);
+  element.appendChild(editBtn);
 
   container.appendChild(element);
-
 }
 
 
