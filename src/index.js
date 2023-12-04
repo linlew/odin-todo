@@ -80,6 +80,7 @@ function changeListTitle(listName) {
 }
 
 function clearDom(){
+  // https://stackoverflow.com/questions/4777077/removing-elements-by-class-name
   const elements = document.getElementsByClassName('todo');
   while(elements.length > 0){
       elements[0].parentNode.removeChild(elements[0]);
