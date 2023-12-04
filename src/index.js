@@ -12,8 +12,8 @@ const buttonLogic = (function() {
     console.log('list test')
   }
 
-  const openEditTaskWindow = () => {
-    
+  const openEditTaskWindow = (event) => {
+    console.log(event.currentTarget.position)
   }
   
   const addTodoBtn = document.querySelector('.add-todo-btn');
@@ -22,11 +22,14 @@ const buttonLogic = (function() {
   const addListBtn = document.querySelector('.add-list');
   addListBtn.addEventListener('click', openAddListWindow);
 
+  return {openEditTaskWindow};
+
+  
+
 })();
 
 
-
-function addTodoDom(id, taskTitle) {
+function addTodoDom(position, id, taskTitle, taskDescription, taskDue) {
   const container = document.querySelector('.todo-container');
 
   const element = document.createElement('div');
@@ -42,63 +45,105 @@ function addTodoDom(id, taskTitle) {
   title.classList.add('task');
   title.classList.add('task-title');
   title.textContent = taskTitle;
+
+  const description = document.createElement('p');
+  description.classList.add('task');
+  description.classList.add('task-description');
+  description.textContent = taskDescription;
+
+  const due = document.createElement('p');
+  due.classList.add('task');
+  due.classList.add('task-description');
+  due.textContent = taskDue;
   
   const editBtn = document.createElement('button');
   editBtn.classList.add('task');
   editBtn.classList.add('task-btn');
   editBtn.textContent = 'edit';
 
+  editBtn.addEventListener('click', buttonLogic.openEditTaskWindow)
+  editBtn.list = todoList.getCurrentPosition;
+  editBtn.position = position;
+
   element.appendChild(finished);
   element.appendChild(title);
+  element.appendChild(description);
+  element.appendChild(due);
   element.appendChild(editBtn);
 
   container.appendChild(element);
 }
 
+function changeListTitle(listName) {
+  const title = document.querySelector('.todo-title');
+  title.textContent = listName;
+}
+
+function clearDom(){
+  const elements = document.getElementsByClassName('todo');
+  while(elements.length > 0){
+      elements[0].parentNode.removeChild(elements[0]);
+  }
+}
 
 
-
- function todoList(name) {
+const todoList = (function() {
   let todoArray = [];
+  let currentPosition = 0;
 
-  const listName = name;
 
   // other variables description, date, priority
-  const addTodo = (taskName) => {
+  const addTodo = (taskName, description, due, priority) => {
     const id = uuidv4();
-    const myObj = {"id": id, "name": taskName};
-    todoArray.push(myObj);
+    const myObj = {"id": id, "name": taskName, "description": description, "due": due, "priority": priority};
+    todoArray[currentPosition].push(myObj);
   }
 
   const getArray = () => {
     console.log(todoArray);
+    return todoArray[currentPosition];
+  }
+
+  const createNewList = (listName) => {
+    currentPosition = todoArray.length;
+    todoArray.push([]);
+    const id = uuidv4();
+    const listObj = {"id": id, "name": listName};
+    todoArray[currentPosition].push(listObj)
   }
 
   const populateDom = () => {
-    const n = todoArray.length;
-    for (let i = 0; i < n; i++) {
-      const currentObj = todoArray[i];
+    const currentArray = todoArray[currentPosition];
+    const n = currentArray.length;
+    const listName = currentArray[0]['name'];
+    changeListTitle(listName);
+    for (let i = 1; i < n; i++) {
+      const currentObj = currentArray[i];
       const id = currentObj['id'];
-      const title = currentObj['name']
-      addTodoDom(id, title);
+      const title = currentObj['name'];
+      const description = currentObj['description'];
+      const due = currentObj['due'];
+      addTodoDom(i, id, title, description, due);
     }
   }
 
-  return {listName, addTodo, getArray, populateDom};
- }
+  const getCurrentPosition = () => {
+    return currentPosition;
+  }
+
+  return {addTodo, getArray, populateDom, createNewList, getCurrentPosition};
+ })();
 
 
- const testTodo = todoList("Test Todo");
 
- testTodo.addTodo("Laundry");
- testTodo.addTodo("Dishes");
- testTodo.getArray();
- 
-console.log(testTodo.listName);
 
-addTodoDom(1234, 'test');
+todoList.createNewList("list 1");
+todoList.addTodo("Laundry", "do the Laundry", "11/17/23", 0);
+todoList.addTodo("Dishes", "do the Dishes", "11/14/23", 0);
+todoList.getArray();
+todoList.populateDom();
 
-testTodo.populateDom();
+
 
 
 
@@ -109,13 +154,10 @@ testTodo.populateDom();
 // What I need to do
 
 
-// Dom related Stuff
-// initialize the buttons while populating the page
 // add a window for adding todolist
 
 
 // JS Logic
-// Edit a todo item
 // Button to clear checked items 
 // 
 

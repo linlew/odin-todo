@@ -85,7 +85,7 @@ i {
     width: 50px;
 }
 
-.todo-title {
+.todo-header {
     background-color: var(--main-color);
     display: flex;
 
